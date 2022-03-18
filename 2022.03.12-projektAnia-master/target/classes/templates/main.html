@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="httt://www.thymeleaf.orh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cukiernia</title>
+    <link rel="stylesheet" href="/cssmain.css"/>
+    <link rel="stylesheet" href="/cake.css"/>
+    <script src="/jquery-3.6.0.min.js"></script>
+    <script src="cart.js"></script>
+</head>
+<body>
+
+<div th:replace="fragments.html :: logo"></div>
+<div th:replace="fragments.html :: menu"></div>
+
+
+<div id="content">
+
+<div class="cake" th:each="cake, ci : ${cakes}">
+    <div th:text="${cake.title}"class="title"></div>
+    <div th:text="'Cena: '+${cake.price}"class="price"></div>
+    <div th:text="'Ilosc:'+${cake.quantity}"class="guantity"></div>
+    <!--<a th:if="${logged==true}" th:href="@{/cart/add/{title}(title=${cake.title})}" class="cart-button">Do koszyka</a>-->
+    <!--<a href="/add" th:if="${logged==true}">Dodatki</a>-->
+        <input type="hidden" name="title" th:value="${cake.title}">
+        <input type="hidden" id="addonsNumber" th:value="${addes.size}">
+        <div class="add-form" th:each="add1, i : ${addes}">
+            <input type="checkbox" name="deactivated" value="1" th:id="${'cb' + ci.index + i.index}">
+
+            <div th:text="${add1.addTitle}"class="addTitle"></div>
+            <div th:text="'Cena: '+${add1.addPrice}"class="addPrice"></div>
+        </div>
+    <button th:onclick="'cart(' + ${ci.index} + ', ' + ${addes.size} + ')'">Dodaj do koszyka</button>
+</div>
+
+</div>
+
+</body>
+</html>
